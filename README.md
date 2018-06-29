@@ -6,6 +6,7 @@ V1.0.1
 - Navigate trouhgt the menu to see your stats an save the graph you want or export the info into a .csv or .txt file
 
 Requires .Net Framework (https://docs.microsoft.com/en-us/dotnet/framework/install/on-windows-10)
+
 It compiles by CreativeCommons license (http://creativecommons.org/licenses/by-nc/4.0)
 
 If you need to reach me yo can wirte an email to ronny115@gmail.com or write a pm to /u/ronny_1 on reddit 
