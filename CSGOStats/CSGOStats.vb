@@ -278,11 +278,7 @@ Public Class CSGOStats
         closeHelpPic.Visible = True
         helpPanelImage.Visible = True
         howtoTextBox.Visible = True
-        If File.Exists("text\howto.rtf") Then
-            howtoTextBox.LoadFile("text\howto.rtf")
-        Else
-            howtoTextBox.Text = "File Not Found"
-        End If
+        howtoTextBox.Rtf = My.Resources.howto
     End Sub
     '/////////////////
     'How tab handle///
@@ -300,13 +296,8 @@ Public Class CSGOStats
         aboutTab_clicked = Nothing
         howtoTextBox.Visible = True
         aboutTextBox.Visible = False
-        If File.Exists("text\howto.rtf") Then
-            howtoTextBox.Clear()
-            howtoTextBox.LoadFile("text\howto.rtf")
-        Else
-            howtoTextBox.Clear()
-            howtoTextBox.Text = "File Not Found"
-        End If
+        howtoTextBox.Rtf = My.Resources.howto
+
 
     End Sub
     '//////////////////
@@ -336,11 +327,7 @@ Public Class CSGOStats
         howTab_clicked = Nothing
         howtoTextBox.Visible = False
         aboutTextBox.Visible = True
-        If File.Exists("text\about.rtf") Then
-            aboutTextBox.LoadFile("text\about.rtf")
-        Else
-            aboutTextBox.Text = "File Not Found"
-        End If
+        aboutTextBox.Rtf = My.Resources.about
     End Sub
     '///////////////////
     'Close help Handle//

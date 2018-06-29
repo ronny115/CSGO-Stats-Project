@@ -157,6 +157,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\about.rtf" />
+    <None Include="Resources\howto.rtf" />
     <None Include="Resources\msBackground.png" />
   </ItemGroup>
   <ItemGroup>

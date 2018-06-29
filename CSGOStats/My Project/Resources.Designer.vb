@@ -61,6 +61,26 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        '''{\colortbl ;\red0\green0\blue255;}
+        '''{\*\generator Riched20 10.0.17134}\viewkind4\uc1 
+        '''\pard\sa200\sl276\slmult1\qc\b\f0\fs22\lang9\par
+        '''\par
+        '''GS:GO Stats\b0\par
+        '''Version \i 1.0.0\par
+        '''\i0 Net FrameWork \i 4.6.1\par
+        '''\i0 Created By \b ronny_1 \par
+        '''\b0{\pict{\*\picprop}\wmetafile8\picw2328\pich820\picwgoal1320\pichgoal465 
+        '''0100090000039e07000000007507000000000400000003010800050000000b0200000000050000
+        '''000c021f00580 [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property about() As String
+            Get
+                Return ResourceManager.GetString("about", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property age_dis() As System.Drawing.Bitmap
@@ -377,6 +397,18 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("help_tab_hov", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+        '''{\colortbl ;\red0\green0\blue255;}
+        '''{\*\generator Riched20 10.0.17134}\viewkind4\uc1 
+        '''\pard\sa200\sl276\slmult1\fs28\lang9 1 -. \i\fs22 Load\i0  all you matchmaking history\super 1\nosupersub  from your personal steam website \fs18 ({{\field{\*\fldinst{HYPERLINK https://steamcommunity.com/my/gcpd/730?tab=matchhistorycompetitive }}{\fldrslt{https://steamcommunity.com/my/gcpd/730?tab=matchhistorycompetitive\ul0\cf0}}}} [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property howto() As String
+            Get
+                Return ResourceManager.GetString("howto", resourceCulture)
             End Get
         End Property
         
