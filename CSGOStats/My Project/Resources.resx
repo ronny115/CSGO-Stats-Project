@@ -184,7 +184,7 @@
   <data name="msBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\msBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg-Gstats" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="bg_Gstats" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bg-Gstats.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="off_ena" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -220,7 +220,7 @@
   <data name="help_dis" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help_dis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg-Other" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="bg_Other" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bg-Other.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="msButton_ena" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -229,10 +229,10 @@
   <data name="down_dis" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\down_dis.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg-Menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="bg_Menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bg-Menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bg-Maps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="bg_Maps" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bg-Maps.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="can_ena" type="System.Resources.ResXFileRef, System.Windows.Forms">

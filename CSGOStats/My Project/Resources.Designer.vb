@@ -135,7 +135,7 @@ Namespace My.Resources
         '''</summary>
         Friend ReadOnly Property bg_Gstats() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("bg-Gstats", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("bg_Gstats", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -145,7 +145,7 @@ Namespace My.Resources
         '''</summary>
         Friend ReadOnly Property bg_Maps() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("bg-Maps", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("bg_Maps", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -155,7 +155,7 @@ Namespace My.Resources
         '''</summary>
         Friend ReadOnly Property bg_Menu() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("bg-Menu", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("bg_Menu", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -165,7 +165,7 @@ Namespace My.Resources
         '''</summary>
         Friend ReadOnly Property bg_Other() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("bg-Other", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("bg_Other", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
