@@ -234,9 +234,9 @@ Public Class CSGOStats
         MainScreen.Visible = True
         mainMenu.Visible = False
 
-        generalStats.Hide()
-        mapStats.Hide()
-        otherStats.Hide()
+        generalStats.Close()
+        mapStats.Close()
+        otherStats.Close()
         clearVar()
     End Sub
     '//////////////////////

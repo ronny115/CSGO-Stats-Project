@@ -149,11 +149,7 @@ Public Class dataReader
         '////////////////////////
         'Remove inncessary data//
         '////////////////////////
-        For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Equals("Competitive Matches") Then
-                Continue For
-            End If
-
+        For i As Integer = 850 To dataList.Count - 1
             If dataList(i).Contains(matchSearchQuery) Then
                 dataList.RemoveRange(0, (i - 1))
                 Exit For
@@ -164,7 +160,6 @@ Public Class dataReader
     Public Sub matchData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
 
         Dim roundsTeamA, roundsTeamB, stringLength As Integer
-        Dim playerInTeamA, playerInTeamB As Boolean
         Dim splitedTime() As String
         For i As Integer = 0 To dataList.Count - 1
             '////////////////////
@@ -200,9 +195,7 @@ Public Class dataReader
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
                     If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
-                        playerInTeamA = True
-                        playerInTeamB = False
-                        If roundsTeamA > roundsTeamB And playerInTeamA = True Then
+                        If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
                             lostCount = 0
@@ -212,7 +205,7 @@ Public Class dataReader
                             If roundsTeamA < 15 Then
                                 winBySurrender += 1
                             End If
-                        ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
+                        ElseIf roundsTeamA < roundsTeamB Then
                             'lost
                             winCount = 0
                             lostCount += 1
@@ -221,26 +214,6 @@ Public Class dataReader
                             totalRoundsLost += roundsTeamB
                             If roundsTeamB < 15 Then
                                 lostBySurrender += 1
-                            End If
-                        ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
-                            'lost
-                            lostCount += 1
-                            winCount = 0
-                            tieCount = 0
-                            totalRoundsWin += roundsTeamB
-                            totalRoundsLost += roundsTeamA
-                            If roundsTeamA < 15 Then
-                                lostBySurrender += 1
-                            End If
-                        ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
-                            'win
-                            lostCount = 0
-                            winCount += 1
-                            tieCount = 0
-                            totalRoundsWin += roundsTeamB
-                            totalRoundsLost += roundsTeamA
-                            If roundsTeamB < 15 Then
-                                winBySurrender += 1
                             End If
                         ElseIf roundsTeamA = roundsTeamB Then
                             'tie
@@ -259,29 +232,7 @@ Public Class dataReader
                 Next
                 For k As Integer = i To i + 205
                     If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
-                        playerInTeamA = False
-                        playerInTeamB = True
-                        If roundsTeamA > roundsTeamB And playerInTeamA = True Then
-                            'win
-                            winCount += 1
-                            lostCount = 0
-                            tieCount = 0
-                            totalRoundsWin += roundsTeamA
-                            totalRoundsLost += roundsTeamB
-                            If roundsTeamA < 15 Then
-                                winBySurrender += 1
-                            End If
-                        ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
-                            'lost
-                            winCount = 0
-                            lostCount += 1
-                            tieCount = 0
-                            totalRoundsWin += roundsTeamA
-                            totalRoundsLost += roundsTeamB
-                            If roundsTeamB < 15 Then
-                                lostBySurrender += 1
-                            End If
-                        ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
+                        If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
                             winCount = 0
@@ -291,7 +242,7 @@ Public Class dataReader
                             If roundsTeamA < 15 Then
                                 lostBySurrender += 1
                             End If
-                        ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
+                        ElseIf roundsTeamA < roundsTeamB Then
                             'win
                             lostCount = 0
                             winCount += 1
