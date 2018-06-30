@@ -122,6 +122,10 @@ Public Class dataReader
         'Remove inncessary data//
         '////////////////////////
         For i As Integer = 0 To dataList.Count - 1
+            If dataList(i).Equals("Competitive Matches") Then
+                Continue For
+            End If
+
             If dataList(i).Contains(matchSearchQuery) Then
                 dataList.RemoveRange(0, (i - 1))
                 Exit For
@@ -135,157 +139,157 @@ Public Class dataReader
         Dim playerInTeamA, playerInTeamB As Boolean
         Dim splitedTime() As String
         For i As Integer = 0 To dataList.Count - 1
+            '////////////////////
+            'Get the match info//
+            '////////////////////
             If dataList(i).Contains(matchSearchQuery) Then
+                'Ignore ban checker added code
+                If dataList(i).Contains("ElementsContainerHistory_LoadMore") Then
+                    Continue For
+                End If
                 index = i
-                For j As Integer = i To i + 420
-                    '////////////////////////////////////////////////////////////////////
-                    'Search for player name in team A or B, we also get the round count//
-                    '////////////////////////////////////////////////////////////////////
-                    If dataList(j).Contains("csgo_scoreboard_score") Then
-                        Dim roundsCurrentMatch() As String = Regex.Split(dataList(j + 1), ":")
-                        roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
-                        roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
-                        For k As Integer = j - 195 To j
-                            If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
-                                playerInTeamA = True
-                                playerInTeamB = False
-                                If roundsTeamA > roundsTeamB And playerInTeamA = True Then
-                                    'win
-                                    winCount += 1
-                                    lostCount = 0
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                    If roundsTeamA < 15 Then
-                                        winBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
-                                    'lost
-                                    winCount = 0
-                                    lostCount += 1
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                    If roundsTeamB < 15 Then
-                                        lostBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
-                                    'lost
-                                    lostCount += 1
-                                    winCount = 0
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamB
-                                    totalRoundsLost += roundsTeamA
-                                    If roundsTeamA < 15 Then
-                                        lostBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
-                                    'win
-                                    lostCount = 0
-                                    winCount += 1
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamB
-                                    totalRoundsLost += roundsTeamA
-                                    If roundsTeamB < 15 Then
-                                        winBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA = roundsTeamB Then
-                                    'tie
-                                    tieCount += 1
-                                    lostCount = 0
-                                    winCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                Else
-                                    winCount = 0 : tieCount = 0 : lostCount = 0
-                                End If
-                                winList.Add(winCount)
-                                lostList.Add(lostCount)
-                                tieList.Add(tieCount)
+                stringLength = matchSearchQuery.Length
+                matchInfo.Add(dataList(index).Remove(0, stringLength + 1))
+                index += 5
+                'Date
+                matchInfo.Add(dataList(index))
+                'Wait Time
+                index += 5
+                stringLength = dataList(index).Length
+                matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                'Match Duration
+                index += 5
+                stringLength = dataList(index).Length
+                matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+            End If
+            index = 0
+            '////////////////////////////////////////////////////////////////////
+            'Search for player name in team A or B, we also get the round count//
+            '////////////////////////////////////////////////////////////////////
+            If dataList(i).Equals("td colspan=""8"" class=""csgo_scoreboard_score""") Then
+                Dim roundsCurrentMatch() As String = Regex.Split(dataList(i + 1), ":")
+                roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
+                roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
+                For k As Integer = i - 195 To i
+                    If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+                        playerInTeamA = True
+                        playerInTeamB = False
+                        If roundsTeamA > roundsTeamB And playerInTeamA = True Then
+                            'win
+                            winCount += 1
+                            lostCount = 0
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                            If roundsTeamA < 15 Then
+                                winBySurrender += 1
                             End If
-                        Next
-                        For k As Integer = j To j + 205
-                            If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
-                                playerInTeamA = False
-                                playerInTeamB = True
-                                If roundsTeamA > roundsTeamB And playerInTeamA = True Then
-                                    'win
-                                    winCount += 1
-                                    lostCount = 0
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                    If roundsTeamA < 15 Then
-                                        winBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
-                                    'lost
-                                    winCount = 0
-                                    lostCount += 1
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                    If roundsTeamB < 15 Then
-                                        lostBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
-                                    'lost
-                                    lostCount += 1
-                                    winCount = 0
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamB
-                                    totalRoundsLost += roundsTeamA
-                                    If roundsTeamA < 15 Then
-                                        lostBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
-                                    'win
-                                    lostCount = 0
-                                    winCount += 1
-                                    tieCount = 0
-                                    totalRoundsWin += roundsTeamB
-                                    totalRoundsLost += roundsTeamA
-                                    If roundsTeamB < 15 Then
-                                        winBySurrender += 1
-                                    End If
-                                ElseIf roundsTeamA = roundsTeamB Then
-                                    'tie
-                                    tieCount += 1
-                                    lostCount = 0
-                                    winCount = 0
-                                    totalRoundsWin += roundsTeamA
-                                    totalRoundsLost += roundsTeamB
-                                Else
-                                    winCount = 0 : tieCount = 0 : lostCount = 0
-                                End If
-                                winList.Add(winCount)
-                                lostList.Add(lostCount)
-                                tieList.Add(tieCount)
+                        ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
+                            'lost
+                            winCount = 0
+                            lostCount += 1
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                            If roundsTeamB < 15 Then
+                                lostBySurrender += 1
                             End If
-                        Next
-                        teamA.Add(roundsTeamA)
-                        teamB.Add(roundsTeamB)
-                    End If
-                    '////////////////////
-                    'Get the match info//
-                    '////////////////////
-                    If dataList(j).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
-                        stringLength = matchSearchQuery.Length
-                        matchInfo.Add(dataList(index).Remove(0, stringLength + 1))
-                        index += 5
-                        'Date
-                        matchInfo.Add(dataList(index))
-                        'Wait Time
-                        index += 5
-                        stringLength = dataList(index).Length
-                        matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
-                        'Match Duration
-                        index += 5
-                        stringLength = dataList(index).Length
-                        matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                        ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
+                            'lost
+                            lostCount += 1
+                            winCount = 0
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamB
+                            totalRoundsLost += roundsTeamA
+                            If roundsTeamA < 15 Then
+                                lostBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
+                            'win
+                            lostCount = 0
+                            winCount += 1
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamB
+                            totalRoundsLost += roundsTeamA
+                            If roundsTeamB < 15 Then
+                                winBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA = roundsTeamB Then
+                            'tie
+                            tieCount += 1
+                            lostCount = 0
+                            winCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                        Else
+                            winCount = 0 : tieCount = 0 : lostCount = 0
+                        End If
+                        winList.Add(winCount)
+                        lostList.Add(lostCount)
+                        tieList.Add(tieCount)
                     End If
                 Next
-                index = 0
+                For k As Integer = i To i + 205
+                    If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+                        playerInTeamA = False
+                        playerInTeamB = True
+                        If roundsTeamA > roundsTeamB And playerInTeamA = True Then
+                            'win
+                            winCount += 1
+                            lostCount = 0
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                            If roundsTeamA < 15 Then
+                                winBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA < roundsTeamB And playerInTeamA = True Then
+                            'lost
+                            winCount = 0
+                            lostCount += 1
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                            If roundsTeamB < 15 Then
+                                lostBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA > roundsTeamB And playerInTeamB = True Then
+                            'lost
+                            lostCount += 1
+                            winCount = 0
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamB
+                            totalRoundsLost += roundsTeamA
+                            If roundsTeamA < 15 Then
+                                lostBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA < roundsTeamB And playerInTeamB = True Then
+                            'win
+                            lostCount = 0
+                            winCount += 1
+                            tieCount = 0
+                            totalRoundsWin += roundsTeamB
+                            totalRoundsLost += roundsTeamA
+                            If roundsTeamB < 15 Then
+                                winBySurrender += 1
+                            End If
+                        ElseIf roundsTeamA = roundsTeamB Then
+                            'tie
+                            tieCount += 1
+                            lostCount = 0
+                            winCount = 0
+                            totalRoundsWin += roundsTeamA
+                            totalRoundsLost += roundsTeamB
+                        Else
+                            winCount = 0 : tieCount = 0 : lostCount = 0
+                        End If
+                        winList.Add(winCount)
+                        lostList.Add(lostCount)
+                        tieList.Add(tieCount)
+                    End If
+                Next
+                teamA.Add(roundsTeamA)
+                teamB.Add(roundsTeamB)
             End If
         Next
         'Reset the counters and get the longest streak for each win/lost/tie
