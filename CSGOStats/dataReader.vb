@@ -63,61 +63,89 @@ Public Class dataReader
         '/////////////////////////////////////////
         'Determines the search query by language//
         '/////////////////////////////////////////
-        If dataList(2).Equals("html class="" responsive"" lang=""es""") Then
-            matchSearchQuery = "Competitivo"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""en""") Then
-            matchSearchQuery = "Competitive"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""bg""") Then
-            matchSearchQuery = "Съревнователен"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""cs""") Then
-            matchSearchQuery = "Kompetitivní"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""da""") Then
-            matchSearchQuery = "Competitive"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""nl""") Then
-            matchSearchQuery = "Competitief"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""fi""") Then
-            matchSearchQuery = "Kilpailullinen"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""fr""") Then
-            matchSearchQuery = "Compétitif"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""de""") Then
-            matchSearchQuery = "Wettkampf"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""el""") Then
-            matchSearchQuery = "Competitive"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""hu""") Then
-            matchSearchQuery = "Versengő"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""it""") Then
-            matchSearchQuery = "Competitiva"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""ja""") Then
-            matchSearchQuery = "対戦"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""ko""") Then
-            matchSearchQuery = "경쟁"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""no""") Then
-            matchSearchQuery = "Konkurransespilling"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""pl""") Then
-            matchSearchQuery = "Turniejowy"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""pt""") Then
-            matchSearchQuery = "Competitivo"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""pt-br""") Then
-            matchSearchQuery = "Competitivo"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""ro""") Then
-            matchSearchQuery = "Competitive"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""ru""") Then
-            matchSearchQuery = "Соревновательный режим"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""zh-cn""") Then
-            matchSearchQuery = "竞技模式"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""sv""") Then
-            matchSearchQuery = "Tävlingsinriktat"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""zh-tw""") Then
-            matchSearchQuery = "競技模式"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""th""") Then
-            matchSearchQuery = "แข่งขัน"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""tr""") Then
-            matchSearchQuery = "Rekabetçi"
-        ElseIf dataList(2).Equals("html class="" responsive"" lang=""uk""") Then
-            matchSearchQuery = "Змагальний режим"
-        Else
-            matchSearchQuery = "Nothing"
-        End If
+        For i As Integer = 0 To 5
+            If dataList(i).Equals("html class="" responsive"" lang=""es""") Then
+                matchSearchQuery = "Competitivo"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""en""") Then
+                matchSearchQuery = "Competitive"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""bg""") Then
+                matchSearchQuery = "Съревнователен"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""cs""") Then
+                matchSearchQuery = "Kompetitivní"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""da""") Then
+                matchSearchQuery = "Competitive"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""nl""") Then
+                matchSearchQuery = "Competitief"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""fi""") Then
+                matchSearchQuery = "Kilpailullinen"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""fr""") Then
+                matchSearchQuery = "Compétitif"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""de""") Then
+                matchSearchQuery = "Wettkampf"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""el""") Then
+                matchSearchQuery = "Competitive"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""hu""") Then
+                matchSearchQuery = "Versengő"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""it""") Then
+                matchSearchQuery = "Competitiva"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ja""") Then
+                matchSearchQuery = "対戦"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ko""") Then
+                matchSearchQuery = "경쟁"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""no""") Then
+                matchSearchQuery = "Konkurransespilling"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pl""") Then
+                matchSearchQuery = "Turniejowy"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pt""") Then
+                matchSearchQuery = "Competitivo"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pt-br""") Then
+                matchSearchQuery = "Competitivo"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ro""") Then
+                matchSearchQuery = "Competitive"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ru""") Then
+                matchSearchQuery = "Соревновательный режим"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""zh-cn""") Then
+                matchSearchQuery = "竞技模式"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""sv""") Then
+                matchSearchQuery = "Tävlingsinriktat"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""zh-tw""") Then
+                matchSearchQuery = "競技模式"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""th""") Then
+                matchSearchQuery = "แข่งขัน"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""tr""") Then
+                matchSearchQuery = "Rekabetçi"
+                Exit For
+            ElseIf dataList(i).Equals("html class="" responsive"" lang=""uk""") Then
+                matchSearchQuery = "Змагальний режим"
+                Exit For
+            Else
+                matchSearchQuery = "Nothing"
+            End If
+        Next
         '////////////////////////
         'Remove inncessary data//
         '////////////////////////
