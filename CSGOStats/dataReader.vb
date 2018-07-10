@@ -41,7 +41,7 @@ Public Class dataReader
         isNameCorrect = False
         'Search if id appears in data list
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
+    If dataList(i).Contains("""" + steamN + """") AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 isNameCorrect = True
                 Exit For
             End If
@@ -51,6 +51,7 @@ Public Class dataReader
         Else
             matchSearchQuery = "Nothing"
             e.Cancel = True
+        End If
         Return e
     End Function
     Private Function searchLang()
@@ -322,35 +323,35 @@ Public Class dataReader
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         For i As Integer = 0 To dataList.Count - 1
            If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
-                ping.Add(dataList(i + 5))
-                avgPing += (dataList(i + 5))
-                frags.Add(dataList(i + 8))
-                avgFrags += (dataList(i + 8))
-                assists.Add(dataList(i + 11))
-                avgAssists += (dataList(i + 11))
-                deaths.Add(dataList(i + 14))
-                avgDeaths += (dataList(i + 14))
+                ping.Add(dataList(i + 6))
+                avgPing += (dataList(i + 6))
+                frags.Add(dataList(i + 9))
+                avgFrags += (dataList(i + 9))
+                assists.Add(dataList(i + 12))
+                avgAssists += (dataList(i + 12))
+                deaths.Add(dataList(i + 15))
+                avgDeaths += (dataList(i + 15))
                 'Get Mvps
-                If dataList(i + 17).IndexOf("★") = 0 Then
-                    If dataList(i + 17).Remove(0, 1) = "" Then
+                If dataList(i + 18).IndexOf("★") = 0 Then
+                    If dataList(i + 18).Remove(0, 1) = "" Then
                         mvps.Add(1)
                         avgMvp += 1
                     Else
-                        mvps.Add(Convert.ToInt32(dataList(i + 17).Remove(0, 1)))
-                        avgMvp += (dataList(i + 17).Remove(0, 1))
+                        mvps.Add(Convert.ToInt32(dataList(i + 18).Remove(0, 1)))
+                        avgMvp += (dataList(i + 18).Remove(0, 1))
                     End If
                 Else
                     mvps.Add(0)
                 End If
                 'Get HS% this can be empty
-                If dataList(i + 20).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 21).IndexOf("&nbsp;") = 0 Then
                     hs.Add(0)
                 Else
-                    hs.Add(Convert.ToInt32(dataList(i + 20).TrimEnd("%")))
-                    avgHs += (dataList(i + 20).TrimEnd("%"))
+                    hs.Add(Convert.ToInt32(dataList(i + 21).TrimEnd("%")))
+                    avgHs += (dataList(i + 21).TrimEnd("%"))
                 End If
-                points.Add(Convert.ToInt32(dataList(i + 23)))
-                avgPoints += (dataList(i + 23))
+                points.Add(Convert.ToInt32(dataList(i + 24)))
+                avgPoints += (dataList(i + 24))
             End If
         Next
         'Total Kills/deaths/assists
