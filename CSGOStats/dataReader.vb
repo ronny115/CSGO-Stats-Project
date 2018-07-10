@@ -33,10 +33,15 @@ Public Class dataReader
             dataList.Add(element.Trim())
         Next
         dataList.RemoveAll(Function(str) String.IsNullOrWhiteSpace(str))
-        'Search if name appears in data list
+        'Check if steamN is only numbers
+        If Not Regex.IsMatch(steamN, "^[0-9 ]+$") Then
+            matchSearchQuery = "Nothing"
+            e.Cancel = True
+        End If
         isNameCorrect = False
+        'Search if id appears in data list
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+            If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 isNameCorrect = True
                 Exit For
             End If
@@ -46,17 +51,6 @@ Public Class dataReader
         Else
             matchSearchQuery = "Nothing"
             e.Cancel = True
-        End If
-        If matchSearchQuery.Equals("Nothing") Or steamN.Equals("td", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/td", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("tr", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/tr", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("tbody", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/tbody", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("br", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/br", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("table", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/table", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("th", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/th", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("a", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/a", StringComparison.InvariantCultureIgnoreCase) _
-            Or steamN.Equals("div", StringComparison.InvariantCultureIgnoreCase) Or steamN.Equals("/div", StringComparison.InvariantCultureIgnoreCase) Then
-            e.Cancel = True
-        End If
         Return e
     End Function
     Private Function searchLang()
@@ -182,8 +176,12 @@ Public Class dataReader
                 matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
                 'Match Duration
                 index += 5
-                stringLength = dataList(index).Length
-                matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                If Regex.IsMatch(dataList(index), "[0-9]{2}:[0-9]{2}") Then
+                    stringLength = dataList(index).Length
+                    matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                Else
+                    matchInfo.Add("00:00")
+                End If
             End If
             index = 0
             '////////////////////////////////////////////////////////////////////
@@ -194,7 +192,7 @@ Public Class dataReader
                 roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
-                    If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
                         If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
@@ -231,7 +229,7 @@ Public Class dataReader
                     End If
                 Next
                 For k As Integer = i To i + 205
-                    If dataList(k).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
                         If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
@@ -323,7 +321,7 @@ Public Class dataReader
     End Sub
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Equals(steamN, StringComparison.InvariantCultureIgnoreCase) Then
+           If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 ping.Add(dataList(i + 5))
                 avgPing += (dataList(i + 5))
                 frags.Add(dataList(i + 8))
