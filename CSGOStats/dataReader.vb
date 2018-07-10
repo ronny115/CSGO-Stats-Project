@@ -193,7 +193,7 @@ Public Class dataReader
                 roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
-                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
+                    If dataList(k).Contains("""" + steamN + """") AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
                         If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
@@ -230,7 +230,7 @@ Public Class dataReader
                     End If
                 Next
                 For k As Integer = i To i + 205
-                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
+                    If dataList(k).Contains("""" + steamN + """") AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
                         If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
@@ -322,7 +322,7 @@ Public Class dataReader
     End Sub
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         For i As Integer = 0 To dataList.Count - 1
-           If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
+           If dataList(i).Contains("""" + steamN + """") AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 ping.Add(dataList(i + 6))
                 avgPing += (dataList(i + 6))
                 frags.Add(dataList(i + 9))
