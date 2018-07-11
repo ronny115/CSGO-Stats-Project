@@ -15,33 +15,36 @@ Public Class dataReader
 
         rawData = sR.ReadToEnd
         sR.Close()
-        'Search if the name contains < or > and replace it for - character
-        If steamN.IndexOf("<") >= 0 Or steamN.IndexOf(">") >= 0 Then
-            index = steamN.Length
-            For i As Integer = 1 To index
-                If steamN.Substring(i).IndexOf("<") = 0 Then
-                    steamN = steamN.Replace("<"c, "-"c)
-                ElseIf steamN.Substring(i).IndexOf(">") = 0 Then
-                    steamN = steamN.Replace(">"c, "-"c)
-                End If
-            Next
-            rawData = rawData.Replace(Name, steamN)
-            index = 0
-        End If
         Dim elements() As String = Regex.Split(rawData, "<|>")
         For Each element In elements
             dataList.Add(element.Trim())
         Next
         dataList.RemoveAll(Function(str) String.IsNullOrWhiteSpace(str))
-        'Check if steamN is only numbers
-        If Not Regex.IsMatch(steamN, "^[0-9 ]+$") Then
+        'Check if steamN is one of the steamid types and then convert it to what we need
+        If Regex.IsMatch(steamN, "^[0-9]{17}$") Then
+            Dim id As Long
+            id = Convert.ToInt64(steamN)
+            id -= 76561197960265728
+            steamN = Convert.ToString(id)
+        ElseIf Regex.IsMatch(steamN, "^\[U:1:[0-9]+\]$") Then
+            steamN = steamN.Substring(5, steamN.Length - 6)
+        ElseIf Regex.IsMatch(steamN, "^U:1:[0-9]+$") Then
+            steamN = steamN.Substring(4)
+        ElseIf Regex.IsMatch(steamN, "^STEAM_0|1:0|1:[0-9]+$") Then
+            Dim id As Integer
+            id = Convert.ToInt32(steamN.Substring(10)) * 2
+            If Regex.IsMatch(steamN, "^STEAM_0|1:1") Then
+                id += 1
+            End If
+            steamN = Convert.ToString(id)
+        Else
             matchSearchQuery = "Nothing"
             e.Cancel = True
         End If
         isNameCorrect = False
         'Search if id appears in data list
         For i As Integer = 0 To dataList.Count - 1
-    If dataList(i).Contains("""" + steamN + """") AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
+            If dataList(i).Contains("""" + steamN + """") AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 isNameCorrect = True
                 Exit For
             End If
