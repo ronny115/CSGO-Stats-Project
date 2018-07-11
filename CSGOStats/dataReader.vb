@@ -334,25 +334,25 @@ Public Class dataReader
         For i As Integer = 0 To dataList.Count - 1
             If dataList(i).Equals(playerSteamID) Then
                 'All fields can be empty due some data corruption
-                If dataList(i + 6).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 6).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     ping.Add(0)
                 Else
                     ping.Add(dataList(i + 6))
                     avgPing += (dataList(i + 6))
                 End If
-                If dataList(i + 9).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 9).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     frags.Add(0)
                 Else
                     frags.Add(dataList(i + 9))
                     avgFrags += (dataList(i + 9))
                 End If
-                If dataList(i + 12).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 12).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     assists.Add(0)
                 Else
                     assists.Add(dataList(i + 12))
                     avgAssists += (dataList(i + 12))
                 End If
-                If dataList(i + 15).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 15).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     deaths.Add(0)
                 Else
                     deaths.Add(dataList(i + 15))
@@ -371,13 +371,13 @@ Public Class dataReader
                     mvps.Add(0)
                 End If
                 'Get HS% 
-                If dataList(i + 21).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 21).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     hs.Add(0)
                 Else
                     hs.Add(Convert.ToInt32(dataList(i + 21).TrimEnd("%")))
                     avgHs += (dataList(i + 21).TrimEnd("%"))
                 End If
-                If dataList(i + 15).IndexOf("&nbsp;") = 0 Then
+                If dataList(i + 15).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     points.Add(0)
                 Else
                     points.Add(Convert.ToInt32(dataList(i + 24)))
