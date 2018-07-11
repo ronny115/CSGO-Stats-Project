@@ -9,7 +9,8 @@ Public Class dataReader
     Dim matchDuration, matchWait, teamA, teamB As New List(Of Integer)
     Dim matchRounds, matchInfo, mapsPlayed As New List(Of String)
     Public Function loadData(ByVal Path As String, ByVal Name As String, ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
-        Dim isNameCorrect As Boolean
+        'Dim isNameCorrect As Boolean
+        Dim steamID
         Dim rawData As String
         Dim sR As New StreamReader(Path)
 
@@ -28,29 +29,35 @@ Public Class dataReader
             rawData = rawData.Replace(Name, steamN)
             index = 0
         End If
+
         Dim elements() As String = Regex.Split(rawData, "<|>")
         For Each element In elements
             dataList.Add(element.Trim())
         Next
         dataList.RemoveAll(Function(str) String.IsNullOrWhiteSpace(str))
-        'Check if steamN is only numbers
-        If Not Regex.IsMatch(steamN, "^[0-9 ]+$") Then
-            matchSearchQuery = "Nothing"
-            e.Cancel = True
-        End If
-        isNameCorrect = False
-        'Search if id appears in data list
+        'Get the player id instead of the name and clear all de SteamID lines for all players
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
-                isNameCorrect = True
-                Exit For
+            If dataList(i).Equals("!-- profile area --") Then
+                playerSteamID = dataList(i + 4).Remove((dataList(i + 4).Length - 2), 2)
+                playerSteamID = playerSteamID.Remove(0, 38)
+                If playerSteamID.IndexOf("/") > -1 Then
+                    playerSteamID = playerSteamID.Remove(0, 6)
+                End If
+            End If
+            If dataList(i).Contains("a class=""linkTitle"" href=""") Then
+                steamID = dataList(i).Remove(0, 56)
+                If steamID.IndexOf("/") > -1 Then
+                    steamID = steamID.Remove(0, 6)
+                End If
+                steamID = steamID.Remove(steamID.IndexOf(""""), (steamID.Length - steamID.IndexOf("""")))
+                dataList(i) = steamID
             End If
         Next
-        If isNameCorrect = True Then
-            searchLang()
-        Else
-            matchSearchQuery = "Nothing"
+        searchLang()
+        If matchSearchQuery = "Nothing" Then
             e.Cancel = True
+        End If
+        steamID = ""
         Return e
     End Function
     Private Function searchLang()
@@ -170,11 +177,7 @@ Public Class dataReader
                 index += 5
                 'Date
                 matchInfo.Add(dataList(index))
-                'Wait Time
-                index += 5
-                stringLength = dataList(index).Length
-                matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
-                'Match Duration
+                'Wait Time 
                 index += 5
                 If Regex.IsMatch(dataList(index), "[0-9]{2}:[0-9]{2}") Then
                     stringLength = dataList(index).Length
@@ -182,17 +185,25 @@ Public Class dataReader
                 Else
                     matchInfo.Add("00:00")
                 End If
-            End If
-            index = 0
+                'Match Duration
+                index += 5
+                    If Regex.IsMatch(dataList(index), "[0-9]{2}:[0-9]{2}") Then
+                        stringLength = dataList(index).Length
+                        matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                    Else
+                        matchInfo.Add("00:00")
+                    End If
+                End If
+                index = 0
             '////////////////////////////////////////////////////////////////////
             'Search for player name in team A or B, we also get the round count//
             '////////////////////////////////////////////////////////////////////
-            If dataList(i).Equals("td colspan=""8"" class=""csgo_scoreboard_score""") Then
+            If dataList(i).Equals("td colspan=""8"" class=""csgo_scoreboard_score""") Or dataList(i).Equals("td colspan=""9"" class=""csgo_scoreboard_score""") Then
                 Dim roundsCurrentMatch() As String = Regex.Split(dataList(i + 1), ":")
                 roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
-                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
+                    If dataList(k).Equals(playerSteamID) Then
                         If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
@@ -229,7 +240,7 @@ Public Class dataReader
                     End If
                 Next
                 For k As Integer = i To i + 205
-                    If dataList(k).Contains(steamN) AndAlso dataList(k).Contains("a class=""linkTitle"" href=""") Then
+                    If dataList(k).Equals(playerSteamID) Then
                         If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
@@ -321,36 +332,57 @@ Public Class dataReader
     End Sub
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         For i As Integer = 0 To dataList.Count - 1
-           If dataList(i).Contains(steamN) AndAlso dataList(i).Contains("a class=""linkTitle"" href=""") Then
-                ping.Add(dataList(i + 5))
-                avgPing += (dataList(i + 5))
-                frags.Add(dataList(i + 8))
-                avgFrags += (dataList(i + 8))
-                assists.Add(dataList(i + 11))
-                avgAssists += (dataList(i + 11))
-                deaths.Add(dataList(i + 14))
-                avgDeaths += (dataList(i + 14))
+            If dataList(i).Equals(playerSteamID) Then
+                'All fields can be empty due some data corruption
+                If dataList(i + 6).IndexOf("&nbsp;") = 0 Then
+                    ping.Add(0)
+                Else
+                    ping.Add(dataList(i + 6))
+                    avgPing += (dataList(i + 6))
+                End If
+                If dataList(i + 9).IndexOf("&nbsp;") = 0 Then
+                    frags.Add(0)
+                Else
+                    frags.Add(dataList(i + 9))
+                    avgFrags += (dataList(i + 9))
+                End If
+                If dataList(i + 12).IndexOf("&nbsp;") = 0 Then
+                    assists.Add(0)
+                Else
+                    assists.Add(dataList(i + 12))
+                    avgAssists += (dataList(i + 12))
+                End If
+                If dataList(i + 15).IndexOf("&nbsp;") = 0 Then
+                    deaths.Add(0)
+                Else
+                    deaths.Add(dataList(i + 15))
+                    avgDeaths += (dataList(i + 15))
+                End If
                 'Get Mvps
-                If dataList(i + 17).IndexOf("★") = 0 Then
-                    If dataList(i + 17).Remove(0, 1) = "" Then
+                If dataList(i + 18).IndexOf("★") = 0 Then
+                    If dataList(i + 18).Remove(0, 1) = "" Then
                         mvps.Add(1)
                         avgMvp += 1
                     Else
-                        mvps.Add(Convert.ToInt32(dataList(i + 17).Remove(0, 1)))
-                        avgMvp += (dataList(i + 17).Remove(0, 1))
+                        mvps.Add(Convert.ToInt32(dataList(i + 18).Remove(0, 1)))
+                        avgMvp += (dataList(i + 18).Remove(0, 1))
                     End If
                 Else
                     mvps.Add(0)
                 End If
-                'Get HS% this can be empty
-                If dataList(i + 20).IndexOf("&nbsp;") = 0 Then
+                'Get HS% 
+                If dataList(i + 21).IndexOf("&nbsp;") = 0 Then
                     hs.Add(0)
                 Else
-                    hs.Add(Convert.ToInt32(dataList(i + 20).TrimEnd("%")))
-                    avgHs += (dataList(i + 20).TrimEnd("%"))
+                    hs.Add(Convert.ToInt32(dataList(i + 21).TrimEnd("%")))
+                    avgHs += (dataList(i + 21).TrimEnd("%"))
                 End If
-                points.Add(Convert.ToInt32(dataList(i + 23)))
-                avgPoints += (dataList(i + 23))
+                If dataList(i + 15).IndexOf("&nbsp;") = 0 Then
+                    points.Add(0)
+                Else
+                    points.Add(Convert.ToInt32(dataList(i + 24)))
+                    avgPoints += (dataList(i + 24))
+                End If
             End If
         Next
         'Total Kills/deaths/assists

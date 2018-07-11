@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 Module pubVars
-    Public steamN As String
+    Public steamN, playerSteamID As String
     Public exportFileData As New StringBuilder()
 
     Public ping, frags, assists, deaths, mvps, hs, points As New List(Of Integer)

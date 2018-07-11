@@ -122,11 +122,11 @@ Partial Class CSGOStats
         '
         Me.MainScreen.BackColor = System.Drawing.SystemColors.Highlight
         Me.MainScreen.BackgroundImage = Global.CSGOStats.My.Resources.Resources.msBackground
+        Me.MainScreen.Controls.Add(Me.helpButtonPic)
         Me.MainScreen.Controls.Add(Me.aboutTextBox)
         Me.MainScreen.Controls.Add(Me.howtoTextBox)
-        Me.MainScreen.Controls.Add(Me.helpButtonPic)
-        Me.MainScreen.Controls.Add(Me.steamNameInput)
         Me.MainScreen.Controls.Add(Me.loadDataButton)
+        Me.MainScreen.Controls.Add(Me.steamNameInput)
         Me.MainScreen.Controls.Add(Me.closeHelpPic)
         Me.MainScreen.Controls.Add(Me.howTabPic)
         Me.MainScreen.Controls.Add(Me.aboutTabPic)
@@ -171,9 +171,9 @@ Partial Class CSGOStats
         Me.helpButtonPic.BackColor = System.Drawing.Color.White
         Me.helpButtonPic.BackgroundImage = Global.CSGOStats.My.Resources.Resources.help_dis
         Me.helpButtonPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.helpButtonPic.Location = New System.Drawing.Point(567, 163)
+        Me.helpButtonPic.Location = New System.Drawing.Point(654, 254)
         Me.helpButtonPic.Name = "helpButtonPic"
-        Me.helpButtonPic.Size = New System.Drawing.Size(25, 23)
+        Me.helpButtonPic.Size = New System.Drawing.Size(21, 21)
         Me.helpButtonPic.TabIndex = 3
         Me.helpButtonPic.TabStop = False
         '
@@ -196,9 +196,9 @@ Partial Class CSGOStats
         Me.loadDataButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White
         Me.loadDataButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.loadDataButton.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.loadDataButton.Location = New System.Drawing.Point(405, 208)
+        Me.loadDataButton.Location = New System.Drawing.Point(372, 160)
         Me.loadDataButton.Name = "loadDataButton"
-        Me.loadDataButton.Size = New System.Drawing.Size(109, 31)
+        Me.loadDataButton.Size = New System.Drawing.Size(160, 70)
         Me.loadDataButton.TabIndex = 0
         Me.loadDataButton.Text = "Load"
         Me.loadDataButton.UseVisualStyleBackColor = False
@@ -257,8 +257,8 @@ Partial Class CSGOStats
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(904, 511)
-        Me.Controls.Add(Me.mainMenu)
         Me.Controls.Add(Me.MainScreen)
+        Me.Controls.Add(Me.mainMenu)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True

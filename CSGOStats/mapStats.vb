@@ -17,32 +17,32 @@
         '////////////////////////////////////////////////////
         'Set the values for each map in the actual map pool//
         '////////////////////////////////////////////////////
-        For i As Integer = 0 To mapCount.Count - 1
-            If mapCount(i).Contains("Mirage") Then
+        For i As Integer = 0 To mapCount.Count - 1 Step 2
+            If mapCount(i).Equals("Mirage") Then
                 mirageCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Cache") Then
+            ElseIf mapCount(i).Equals("Cache") Then
                 cacheCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Inferno") Then
+            ElseIf mapCount(i).Equals("Inferno") Then
                 infernoCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Overpass") Then
+            ElseIf mapCount(i).Equals("Overpass") Then
                 overpassCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Train") Then
+            ElseIf mapCount(i).Equals("Train") Then
                 trainCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Nuke") Then
+            ElseIf mapCount(i).Equals("Nuke") Then
                 nukeCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Dust II") Then
+            ElseIf mapCount(i).Equals("Dust II") Then
                 dustCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Cobblestone") Then
+            ElseIf mapCount(i).Equals("Cobblestone") Then
                 cobbleCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Office") Then
+            ElseIf mapCount(i).Equals("Office") Then
                 officeCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Canals") Then
+            ElseIf mapCount(i).Equals("Canals") Then
                 canalsCountLabel.Text = mapCount(i + 1)
-            ElseIf mapCount(i).Contains("Agency") Then
+            ElseIf mapCount(i).Equals("Agency") Then
                 agencyCountLabel.Text = mapCount(i + 1)
-            ElseIf Not mapCount(i).Contains("Mirage") Or Not mapCount(i).Contains("Cache") Or Not mapCount(i).Contains("Inferno") Or Not mapCount(i).Contains("Overpass") _
-                Or Not mapCount(i).Contains("Train") Or Not mapCount(i).Contains("Nuke") Or Not mapCount(i).Contains("Dust II") Or Not mapCount(i).Contains("Cobblestone") _
-                Or Not mapCount(i).Contains("Office") Or Not mapCount(i).Contains("Canals") Or Not mapCount(i).Contains("Agency") Then
+            ElseIf Not mapCount(i).Equals("Mirage") Or Not mapCount(i).Equals("Cache") Or Not mapCount(i).Equals("Inferno") Or Not mapCount(i).Equals("Overpass") _
+                Or Not mapCount(i).Equals("Train") Or Not mapCount(i).Equals("Nuke") Or Not mapCount(i).Equals("Dust II") Or Not mapCount(i).Equals("Cobblestone") _
+                Or Not mapCount(i).Equals("Office") Or Not mapCount(i).Equals("Canals") Or Not mapCount(i).Equals("Agency") Then
                 otherMaps.Add(mapCount(i))
             End If
         Next
@@ -58,28 +58,40 @@
         mapStatsChart.Titles("MapTitle").Text = "All Maps Wins/Losses/Ties"
         mapStatsChart.Series.Add("Map Stats")
         mapStatsChart.Series(0).Font = New Font("Arial", 8, FontStyle.Regular)
-        mapStatsChart.Series(0).Points.AddXY(Math.Round(((winCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", winCount)
+        If winCount = 0 Then
+            mapStatsChart.Series(0).Points.AddXY("", winCount)
+        Else
+            mapStatsChart.Series(0).Points.AddXY(Math.Round(((winCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", winCount)
+        End If
         mapStatsChart.Series(0).Points(0).LegendText = "Wins - " & winCount
-        mapStatsChart.Series(0).Points.AddXY(Math.Round(((tieCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", tieCount)
+        If tieCount = 0 Then
+            mapStatsChart.Series(0).Points.AddXY("", tieCount)
+        Else
+            mapStatsChart.Series(0).Points.AddXY(Math.Round(((tieCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", tieCount)
+        End If
         mapStatsChart.Series(0).Points(1).LegendText = "Ties - " & tieCount
-        mapStatsChart.Series(0).Points.AddXY(Math.Round(((lostCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", lostCount)
+        If lostCount = 0 Then
+            mapStatsChart.Series(0).Points.AddXY("", lostCount)
+        Else
+            mapStatsChart.Series(0).Points.AddXY(Math.Round(((lostCount * 100) / (winCount + tieCount + lostCount)), 2, MidpointRounding.AwayFromZero) & "%", lostCount)
+        End If
         mapStatsChart.Series(0).Points(2).LegendText = "Losses - " & lostCount
         mapStatsChart.Series(0).ChartType = DataVisualization.Charting.SeriesChartType.Pie
     End Sub
     Private Sub mapChart(mapName As String)
         Dim wins, losses, ties As Integer
         For i As Integer = 0 To mapWin.Count - 1
-            If mapWin(i).Contains(mapName) Then
+            If mapWin(i).Equals(mapName) Then
                 wins += 1
             End If
         Next
         For i As Integer = 0 To mapTie.Count - 1
-            If mapTie(i).Contains(mapName) Then
+            If mapTie(i).Equals(mapName) Then
                 ties += 1
             End If
         Next
         For i As Integer = 0 To mapLost.Count - 1
-            If mapLost(i).Contains(mapName) Then
+            If mapLost(i).Equals(mapName) Then
                 losses += 1
             End If
         Next

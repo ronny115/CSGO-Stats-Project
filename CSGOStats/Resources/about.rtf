@@ -1,11 +1,15 @@
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-{\colortbl ;\red0\green0\blue255;}
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Consolas;}}
+{\colortbl ;\red163\green21\blue21;\red0\green0\blue255;}
 {\*\generator Riched20 10.0.17134}\viewkind4\uc1 
-\pard\sa200\sl276\slmult1\qc\b\f0\fs22\lang9\par
-\par
-GS:GO Stats\b0\par
-Version \i 1.0.0\par
-\i0 Net FrameWork \i 4.6.1\par
+\pard\sa200\sl276\slmult1\qc\b\f0\fs22\lang9 GS:GO Stats\b0\par
+Version \i 1.0.4\par
+
+\pard\sa200\sl276\slmult1\i0 - Changed the method to obtain data, now we get the steamID automatically from file and search for it instead of the steam profile name, to avoid errors that may come with weird characters or inconsistences (thanks to u/joao7yt)\par
+-Fixed error ocasionated by extensions added code\par
+-Fixed instances where empty field could give an error (asuming that the web replace the value with "\cf1\f1\fs19 &nbsp;\cf0\f0\fs22 ")\par
+-Fixed an error that could merge the map stats for Dust and Dust II \par
+
+\pard\sa200\sl276\slmult1\qc Net FrameWork \i 4.6.1\par
 \i0 Created By \b ronny_1 \par
 \b0{\pict{\*\picprop}\wmetafile8\picw2328\pich820\picwgoal1320\pichgoal465 
 0100090000039e07000000007507000000000400000003010800050000000b0200000000050000

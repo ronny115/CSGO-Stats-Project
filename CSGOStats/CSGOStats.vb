@@ -22,10 +22,11 @@ Public Class CSGOStats
         closeHelpPic.Visible = False
         howtoTextBox.Visible = False
         aboutTextBox.Visible = False
+        steamNameInput.Visible = False
 
-        If (steamNameInput.Text Is Nothing Or steamNameInput.Text.Trim().Length < 1) Then
-            loadDataButton.Enabled = False
-        End If
+        'If (steamNameInput.Text Is Nothing Or steamNameInput.Text.Trim().Length < 1) Then
+        '    loadDataButton.Enabled = False
+        'End If
         'Delete the bevel
         For Each c As Control In Me.Controls()
             If TypeOf (c) Is MdiClient Then
@@ -41,7 +42,8 @@ Public Class CSGOStats
         Dim openFileCancel As DialogResult = openFile.ShowDialog()
 
         openFile.InitialDirectory = "C:\"
-        steamN = steamNameInput.Text
+        'Disabled for the moment
+        steamN = ""
 
         If openFileCancel = System.Windows.Forms.DialogResult.Cancel Then
             errorLabel.Text = "You need" & Environment.NewLine & "to select" & Environment.NewLine & "a file"
@@ -57,7 +59,7 @@ Public Class CSGOStats
         If e.Error IsNot Nothing Then
             MessageBox.Show("Error: " & e.Error.Message)
         ElseIf e.Cancelled Then
-            errorLabel.Text = "Steam Name" & Environment.NewLine & "or file" & Environment.NewLine & "incorrect" & Environment.NewLine & "please check"
+            errorLabel.Text = "File" & Environment.NewLine & "incorrect" & Environment.NewLine & "please check"
         Else
             errorLabel.Text = ""
             MainScreen.Visible = False

@@ -55,7 +55,9 @@
         For i As Integer = 0 To (lastYear - firstYear)
             If janKD(i) > 2.5 Or febKD(i) > 2.5 Or marKD(i) > 2.5 Or aprKD(i) > 2.5 Or mayKD(i) > 2.5 Or junKD(i) > 2.5 Or julKD(i) > 2.5 Or augKD(i) > 2.5 Or sepKD(i) > 2.5 Or
             octKD(i) > 2.5 Or novKD(i) > 2.5 Or decKD(i) > 2.5 Then
-                kdRatioChart.ChartAreas(0).AxisY.Maximum = (kdRatio + 0.5)
+                kdRatioChart.ChartAreas(0).AxisY.Maximum = (3.5)
+            Else
+                kdRatioChart.ChartAreas(0).AxisY.Maximum = (2.5)
             End If
         Next
     End Sub
