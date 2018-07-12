@@ -50,7 +50,8 @@ Public Class dataReader
                     steamID = steamID.Remove(0, 6)
                 End If
                 steamID = steamID.Remove(steamID.IndexOf(""""), (steamID.Length - steamID.IndexOf("""")))
-                dataList(i) = steamID
+                'Add identifier to avoid errors by the same steam id and profileName
+                dataList(i) = steamID & "steamID"
             End If
         Next
         searchLang()
@@ -203,7 +204,7 @@ Public Class dataReader
                 roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
-                    If dataList(k).Equals(playerSteamID) Then
+                    If dataList(k).Equals(playerSteamID & "steamID") Then
                         If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
@@ -240,7 +241,7 @@ Public Class dataReader
                     End If
                 Next
                 For k As Integer = i To i + 205
-                    If dataList(k).Equals(playerSteamID) Then
+                    If dataList(k).Equals(playerSteamID & "steamID") Then
                         If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
@@ -332,7 +333,7 @@ Public Class dataReader
     End Sub
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Equals(playerSteamID) Then
+            If dataList(i).Equals(playerSteamID & "steamID") Then
                 'All fields can be empty due some data corruption
                 If dataList(i + 6).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
                     ping.Add(0)

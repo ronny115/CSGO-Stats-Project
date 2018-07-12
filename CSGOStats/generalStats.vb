@@ -52,14 +52,6 @@
         kdRatioChart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
         kdRatioChart.ChartAreas(0).AxisY.MajorGrid.LineDashStyle = 2
         kdRatioChart.ChartAreas(0).AxisY.MajorGrid.LineColor = Color.LightGray
-        For i As Integer = 0 To (lastYear - firstYear)
-            If janKD(i) > 2.5 Or febKD(i) > 2.5 Or marKD(i) > 2.5 Or aprKD(i) > 2.5 Or mayKD(i) > 2.5 Or junKD(i) > 2.5 Or julKD(i) > 2.5 Or augKD(i) > 2.5 Or sepKD(i) > 2.5 Or
-            octKD(i) > 2.5 Or novKD(i) > 2.5 Or decKD(i) > 2.5 Then
-                kdRatioChart.ChartAreas(0).AxisY.Maximum = (3.5)
-            Else
-                kdRatioChart.ChartAreas(0).AxisY.Maximum = (2.5)
-            End If
-        Next
     End Sub
     Private Sub comboBoxSelectedItem(sender As Object, e As EventArgs) Handles anualKDcomboBox.SelectedIndexChanged
         kdRatioChart.Focus()
@@ -79,6 +71,12 @@
                 kdRatioChart.Series("K/D Ratio").Points.AddXY("Oct", octKD(i))
                 kdRatioChart.Series("K/D Ratio").Points.AddXY("Nov", novKD(i))
                 kdRatioChart.Series("K/D Ratio").Points.AddXY("Dec", decKD(i))
+                If janKD(i) > 2.5 Or febKD(i) > 2.5 Or marKD(i) > 2.5 Or aprKD(i) > 2.5 Or mayKD(i) > 2.5 Or junKD(i) > 2.5 Or julKD(i) > 2.5 Or augKD(i) > 2.5 Or sepKD(i) > 2.5 Or
+            octKD(i) > 2.5 Or novKD(i) > 2.5 Or decKD(i) > 2.5 Then
+                    kdRatioChart.ChartAreas(0).AxisY.Maximum = (Math.Max(Math.Max(Math.Max(Math.Max(janKD(i), febKD(i)), Math.Max(marKD(i), aprKD(i))), Math.Max(Math.Max(mayKD(i), junKD(i)), Math.Max(julKD(i), augKD(i)))), Math.Max(Math.Max(sepKD(i), octKD(i)), Math.Max(novKD(i), decKD(i)))))
+                Else
+                    kdRatioChart.ChartAreas(0).AxisY.Maximum = (2.5)
+                End If
             End If
             If anualKDcomboBox.SelectedIndex = (lastYear - firstYear) + 1 Then
                 If kdRatioChart.Series.IndexOf("K/D Ratio") > -1 Then
@@ -102,6 +100,12 @@
                 kdRatioChart.Series("K/D Ratio " & firstYear + i).Points.AddXY("Oct", octKD(i))
                 kdRatioChart.Series("K/D Ratio " & firstYear + i).Points.AddXY("Nov", novKD(i))
                 kdRatioChart.Series("K/D Ratio " & firstYear + i).Points.AddXY("Dec", decKD(i))
+                If janKD(i) > 2.5 Or febKD(i) > 2.5 Or marKD(i) > 2.5 Or aprKD(i) > 2.5 Or mayKD(i) > 2.5 Or junKD(i) > 2.5 Or julKD(i) > 2.5 Or augKD(i) > 2.5 Or sepKD(i) > 2.5 Or
+            octKD(i) > 2.5 Or novKD(i) > 2.5 Or decKD(i) > 2.5 Then
+                    kdRatioChart.ChartAreas(0).AxisY.Maximum = (Math.Max(Math.Max(Math.Max(Math.Max(janKD(i), febKD(i)), Math.Max(marKD(i), aprKD(i))), Math.Max(Math.Max(mayKD(i), junKD(i)), Math.Max(julKD(i), augKD(i)))), Math.Max(Math.Max(sepKD(i), octKD(i)), Math.Max(novKD(i), decKD(i)))))
+                ElseIf kdRatioChart.ChartAreas(0).AxisY.Maximum < 2.5 Then
+                    kdRatioChart.ChartAreas(0).AxisY.Maximum = (2.5)
+                End If
             End If
         Next
     End Sub
