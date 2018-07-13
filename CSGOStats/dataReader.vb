@@ -66,82 +66,82 @@ Public Class dataReader
         'Determines the search query by language//
         '/////////////////////////////////////////
         For i As Integer = 0 To 5
-            If dataList(i).Equals("html class="" responsive"" lang=""es""") Then
+            If dataList(i).StartsWith("html class="" responsive"" lang=""es""") Then
                 matchSearchQuery = "Competitivo"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""en""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""en""") Then
                 matchSearchQuery = "Competitive"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""bg""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""bg""") Then
                 matchSearchQuery = "Съревнователен"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""cs""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""cs""") Then
                 matchSearchQuery = "Kompetitivní"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""da""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""da""") Then
                 matchSearchQuery = "Competitive"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""nl""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""nl""") Then
                 matchSearchQuery = "Competitief"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""fi""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""fi""") Then
                 matchSearchQuery = "Kilpailullinen"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""fr""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""fr""") Then
                 matchSearchQuery = "Compétitif"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""de""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""de""") Then
                 matchSearchQuery = "Wettkampf"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""el""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""el""") Then
                 matchSearchQuery = "Competitive"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""hu""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""hu""") Then
                 matchSearchQuery = "Versengő"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""it""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""it""") Then
                 matchSearchQuery = "Competitiva"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ja""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""ja""") Then
                 matchSearchQuery = "対戦"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ko""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""ko""") Then
                 matchSearchQuery = "경쟁"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""no""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""no""") Then
                 matchSearchQuery = "Konkurransespilling"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pl""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""pl""") Then
                 matchSearchQuery = "Turniejowy"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pt""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""pt""") Then
                 matchSearchQuery = "Competitivo"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""pt-br""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""pt-br""") Then
                 matchSearchQuery = "Competitivo"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ro""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""ro""") Then
                 matchSearchQuery = "Competitive"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""ru""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""ru""") Then
                 matchSearchQuery = "Соревновательный режим"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""zh-cn""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""zh-cn""") Then
                 matchSearchQuery = "竞技模式"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""sv""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""sv""") Then
                 matchSearchQuery = "Tävlingsinriktat"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""zh-tw""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""zh-tw""") Then
                 matchSearchQuery = "競技模式"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""th""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""th""") Then
                 matchSearchQuery = "แข่งขัน"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""tr""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""tr""") Then
                 matchSearchQuery = "Rekabetçi"
                 Exit For
-            ElseIf dataList(i).Equals("html class="" responsive"" lang=""uk""") Then
+            ElseIf dataList(i).StartsWith("html class="" responsive"" lang=""uk""") Then
                 matchSearchQuery = "Змагальний режим"
                 Exit For
             Else
@@ -167,7 +167,7 @@ Public Class dataReader
             '////////////////////
             'Get the match info//
             '////////////////////
-            If dataList(i).Contains(matchSearchQuery) Then
+            If dataList(i).StartsWith(matchSearchQuery) Then
                 'Ignore ban checker added code
                 If dataList(i).Contains("ElementsContainerHistory_LoadMore") Then
                     Continue For
@@ -188,14 +188,14 @@ Public Class dataReader
                 End If
                 'Match Duration
                 index += 5
-                    If Regex.IsMatch(dataList(index), "[0-9]{2}:[0-9]{2}") Then
-                        stringLength = dataList(index).Length
-                        matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
-                    Else
-                        matchInfo.Add("00:00")
-                    End If
+                If Regex.IsMatch(dataList(index), "[0-9]{2}:[0-9]{2}") Then
+                    stringLength = dataList(index).Length
+                    matchInfo.Add(dataList(index).Remove(0, (stringLength - 5)))
+                Else
+                    matchInfo.Add("00:00")
                 End If
-                index = 0
+            End If
+            index = 0
             '////////////////////////////////////////////////////////////////////
             'Search for player name in team A or B, we also get the round count//
             '////////////////////////////////////////////////////////////////////
@@ -332,32 +332,33 @@ Public Class dataReader
         Next
     End Sub
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
+        Dim number As Integer
         For i As Integer = 0 To dataList.Count - 1
             If dataList(i).Equals(playerSteamID & "steamID") Then
                 'All fields can be empty due some data corruption
-                If dataList(i + 6).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    ping.Add(0)
-                Else
+                If Int32.TryParse(dataList(i + 6), number) = True Then
                     ping.Add(dataList(i + 6))
                     avgPing += (dataList(i + 6))
-                End If
-                If dataList(i + 9).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    frags.Add(0)
                 Else
+                    ping.Add(0)
+                End If
+                If Int32.TryParse(dataList(i + 9), number) = True Then
                     frags.Add(dataList(i + 9))
                     avgFrags += (dataList(i + 9))
-                End If
-                If dataList(i + 12).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    assists.Add(0)
                 Else
+                    frags.Add(0)
+                End If
+                If Int32.TryParse(dataList(i + 12), number) = True Then
                     assists.Add(dataList(i + 12))
                     avgAssists += (dataList(i + 12))
-                End If
-                If dataList(i + 15).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    deaths.Add(0)
                 Else
+                    assists.Add(0)
+                End If
+                If Int32.TryParse(dataList(i + 15), number) = True Then
                     deaths.Add(dataList(i + 15))
                     avgDeaths += (dataList(i + 15))
+                Else
+                    deaths.Add(0)
                 End If
                 'Get Mvps
                 If dataList(i + 18).IndexOf("★") = 0 Then
@@ -372,17 +373,17 @@ Public Class dataReader
                     mvps.Add(0)
                 End If
                 'Get HS% 
-                If dataList(i + 21).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    hs.Add(0)
-                Else
+                If Int32.TryParse(dataList(i + 21), number) = True Then
                     hs.Add(Convert.ToInt32(dataList(i + 21).TrimEnd("%")))
                     avgHs += (dataList(i + 21).TrimEnd("%"))
-                End If
-                If dataList(i + 15).IndexOf("&nbsp;") > -1 Or dataList(i + 6).IndexOf("td") > -1 Then
-                    points.Add(0)
                 Else
+                    hs.Add(0)
+                End If
+                If Int32.TryParse(dataList(i + 24), number) = True Then
                     points.Add(Convert.ToInt32(dataList(i + 24)))
                     avgPoints += (dataList(i + 24))
+                Else
+                    points.Add(0)
                 End If
             End If
         Next
