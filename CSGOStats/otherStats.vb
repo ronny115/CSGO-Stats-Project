@@ -3,7 +3,7 @@
     Protected Overrides ReadOnly Property CreateParams() As System.Windows.Forms.CreateParams
         Get
             Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
-            cp.ExStyle += 33554432
+            cp.ExStyle = cp.ExStyle Or 33554432 '// WS_EX_COMPOSITED
             Return cp
         End Get
     End Property
@@ -28,16 +28,47 @@
         roundsWinLabel.Text = totalRoundsWin
         roundsLostLabel.Text = totalRoundsLost
 
-        avgMapLabel.Text = avgPing & "          " & Format(avgFrags, "00.00") & "           " & Format(avgAssists, "0.00") & "          " & Format(avgDeaths, "00.00") _
-            & "          " & Format(avgMvp, "0.00") & "★      " & Format(avgHs, "00.00") & "%            " & Format(avgPoints, "00")
-        avgWLabel.Text = avgWPing & "          " & Format(avgWFrags, "00.00") & "           " & Format(avgWAssists, "0.00") & "          " & Format(avgWDeaths, "00.00") _
-            & "          " & Format(avgWMvp, "0.00") & "★      " & Format(avgWHs, "00.00") & "%            " & Format(avgWPoints, "00")
-        avgLLabel.Text = avgLPing & "          " & Format(avgLFrags, "00.00") & "           " & Format(avgLAssists, "0.00") & "          " & Format(avgLDeaths, "00.00") _
-            & "          " & Format(avgLMvp, "0.00") & "★      " & Format(avgLHs, "00.00") & "%            " & Format(avgLPoints, "00")
-        maxLabel.Text = maxPing & "               " & Format(maxFrags, "00") & "               " & Format(maxAssists, "00") & "               " & Format(maxDeaths, "00") _
-            & "             " & Format(maxMvp, "00") & "★         " & Format(maxHs, "00") & "%            " & Format(maxPoints, "00")
-        minLabel.Text = minPing & "               " & Format(minFrags, "00") & "               " & Format(minAssists, "00") & "               " & Format(minDeaths, "00") _
-            & "             " & Format(minMvp, "00") & "★         " & Format(minHs, "000") & "%            " & Format(minPoints, "00")
+        avgMapPointsLabel.Text = Format(avgPoints, "00")
+        avgWPointsLabel.Text = Format(avgWPoints, "00")
+        avgLPointsLabel.Text = Format(avgLPoints, "00")
+        maxPointsLabel.Text = maxPoints
+        minPointsLabel.Text = minPoints
+
+        avgMapHsLabel.Text = Format(avgHs, "00.00") & "%"
+        avgWHsLabel.Text = Format(avgWHs, "00.00") & "%"
+        avgLHsLabel.Text = Format(avgLHs, "00.00") & "%"
+        maxHsLabel.Text = maxHs & "%"
+        minHsLabel.Text = minHs & "%"
+
+        avgMapMvpLabel.Text = Format(avgMvp, "0.00") & "★"
+        avgWMvpLabel.Text = Format(avgWMvp, "0.00") & "★"
+        avgLMvpLabel.Text = Format(avgLMvp, "0.00") & "★"
+        maxMvpLabel.Text = maxMvp & "★"
+        minMvpLabel.Text = minMvp & "★"
+
+        avgMapDeathsLabel.Text = Format(avgDeaths, "00.00")
+        avgWDeathsLabel.Text = Format(avgWDeaths, "00.00")
+        avgLDeathsLabel.Text = Format(avgLDeaths, "00.00")
+        maxDeathsLabel.Text = maxDeaths
+        minDeathsLabel.Text = minDeaths
+
+        avgMapAssistsLabel.Text = Format(avgAssists, "0.00")
+        avgWAssistsLabel.Text = Format(avgWAssists, "0.00")
+        avgLAssistsLabel.Text = Format(avgLAssists, "0.00")
+        maxAssistsLabel.Text = maxAssists
+        minAssistsLabel.Text = minAssists
+
+        avgMapKillsLabel.Text = Format(avgFrags, "00.00")
+        avgWKillsLabel.Text = Format(avgWFrags, "00.00")
+        avgLKillsLabel.Text = Format(avgLFrags, "00.00")
+        maxKillsLabel.Text = maxFrags
+        minKillsLabel.Text = minFrags
+
+        avgMapPingLabel.Text = avgPing
+        avgWPingLabel.Text = avgWPing
+        avgLPingLabel.Text = avgLPing
+        maxPingLabel.Text = maxPing
+        minPingLabel.Text = minPing
     End Sub
     Private Sub roundsChartLoad()
         otherChart.Series.Clear()

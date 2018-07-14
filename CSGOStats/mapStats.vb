@@ -3,7 +3,7 @@
     Protected Overrides ReadOnly Property CreateParams() As System.Windows.Forms.CreateParams
         Get
             Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
-            cp.ExStyle += 33554432
+            cp.ExStyle = cp.ExStyle Or 33554432 '// WS_EX_COMPOSITED
             Return cp
         End Get
     End Property

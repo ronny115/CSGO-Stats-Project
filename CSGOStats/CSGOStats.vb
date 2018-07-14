@@ -1,7 +1,31 @@
-﻿Imports System.IO
-Public Class CSGOStats
+﻿Public Class CSGOStats
     Dim filePath As String
     Dim howTab_clicked, aboutTab_clicked, msButtonClicked, gsButtonClicked, osButtonClicked, backButtonClicked
+    Dim originalExStyle As Integer
+    Dim enableFormLevelDoubleBuffering As Boolean = True
+    'Reduces loading flicker
+    Protected Overrides ReadOnly Property CreateParams() As System.Windows.Forms.CreateParams
+        Get
+            originalExStyle = MyBase.CreateParams.ExStyle
+            Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
+            If enableFormLevelDoubleBuffering = True Then
+                cp.ExStyle = cp.ExStyle Or 33554432 '// WS_EX_COMPOSITED
+            Else
+                cp.ExStyle = originalExStyle
+            End If
+            Return cp
+        End Get
+    End Property
+    'Disable/enable double buffering to avoid scroll bars to flicker
+    Private Sub turnOffFormLevelDoubleBuffering()
+        enableFormLevelDoubleBuffering = False
+        Me.MaximizeBox = False
+    End Sub
+    Private Sub turnONFormLevelDoubleBuffering()
+        enableFormLevelDoubleBuffering = True
+        Me.MaximizeBox = False
+    End Sub
+
     'Functions to get And delete the bevel inside the mdi parent
     <System.Runtime.InteropServices.DllImport("user32.dll", EntryPoint:="SetWindowLong")>
     Private Shared Function SetWindowLong(ByVal hWnd As IntPtr, ByVal nIndex As Integer, ByVal dwNewLong As Integer) As Integer
@@ -23,10 +47,6 @@ Public Class CSGOStats
         howtoTextBox.Visible = False
         aboutTextBox.Visible = False
         steamNameInput.Visible = False
-
-        'If (steamNameInput.Text Is Nothing Or steamNameInput.Text.Trim().Length < 1) Then
-        '    loadDataButton.Enabled = False
-        'End If
         'Delete the bevel
         For Each c As Control In Me.Controls()
             If TypeOf (c) Is MdiClient Then
@@ -42,8 +62,6 @@ Public Class CSGOStats
         Dim openFileCancel As DialogResult = openFile.ShowDialog()
 
         openFile.InitialDirectory = "C:\"
-        'Disabled for the moment
-        steamN = ""
 
         If openFileCancel = System.Windows.Forms.DialogResult.Cancel Then
             errorLabel.Text = "You need" & Environment.NewLine & "to select" & Environment.NewLine & "a file"
@@ -73,7 +91,7 @@ Public Class CSGOStats
         worker = CType(sender, System.ComponentModel.BackgroundWorker)
 
         Dim dataLoader As dataReader = CType(e.Argument, dataReader)
-        dataLoader.loadData(filePath, steamN, worker, e)
+        dataLoader.loadData(filePath, worker, e)
         If e.Cancel = True Then
         Else
             dataLoader.matchData(worker, e)
@@ -275,6 +293,7 @@ Public Class CSGOStats
         helpButtonPic.Image = New Bitmap(My.Resources.help_dis)
     End Sub
     Private Sub helpButtonPic_Click(sender As Object, e As EventArgs) Handles helpButtonPic.Click
+        turnOffFormLevelDoubleBuffering()
         helpPanelImage.Visible = True
         aboutTabPic.Visible = True
         closeHelpPic.Visible = True
@@ -341,6 +360,7 @@ Public Class CSGOStats
         closeHelpPic.Image = New Bitmap(My.Resources.close_help_dis)
     End Sub
     Private Sub closeHelpPic_MouseClick(sender As Object, e As EventArgs) Handles closeHelpPic.Click
+        turnONFormLevelDoubleBuffering()
         closeHelpPic.Visible = False
         aboutTabPic.Visible = False
         howTabPic.Visible = False
@@ -356,7 +376,7 @@ Public Class CSGOStats
     'Clear all the public Variables//
     '////////////////////////////////
     Private Sub clearVar()
-        steamN = ""
+        playerSteamID = ""
         exportFileData.Clear()
         ping.Clear() : frags.Clear() : assists.Clear() : deaths.Clear() : mvps.Clear() : hs.Clear() : points.Clear()
         janKD.Clear() : febKD.Clear() : marKD.Clear() : aprKD.Clear() : mayKD.Clear() : junKD.Clear() : julKD.Clear()

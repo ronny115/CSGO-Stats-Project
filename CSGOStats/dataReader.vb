@@ -8,57 +8,64 @@ Public Class dataReader
     Dim winList, lostList, tieList As New List(Of Integer)
     Dim matchDuration, matchWait, teamA, teamB As New List(Of Integer)
     Dim matchRounds, matchInfo, mapsPlayed As New List(Of String)
-    Public Function loadData(ByVal Path As String, ByVal Name As String, ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
-        'Dim isNameCorrect As Boolean
-        Dim steamID
-        Dim rawData As String
+    Public Function loadData(ByVal Path As String, ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
+        Dim rawData, steamID As String
         Dim sR As New StreamReader(Path)
 
         rawData = sR.ReadToEnd
         sR.Close()
-        'Search if the name contains < or > and replace it for - character
-        If steamN.IndexOf("<") >= 0 Or steamN.IndexOf(">") >= 0 Then
-            index = steamN.Length
-            For i As Integer = 1 To index
-                If steamN.Substring(i).IndexOf("<") = 0 Then
-                    steamN = steamN.Replace("<"c, "-"c)
-                ElseIf steamN.Substring(i).IndexOf(">") = 0 Then
-                    steamN = steamN.Replace(">"c, "-"c)
-                End If
-            Next
-            rawData = rawData.Replace(Name, steamN)
-            index = 0
-        End If
 
         Dim elements() As String = Regex.Split(rawData, "<|>")
         For Each element In elements
             dataList.Add(element.Trim())
         Next
         dataList.RemoveAll(Function(str) String.IsNullOrWhiteSpace(str))
-        'Get the player id instead of the name and clear all de SteamID lines for all players
+        searchLang()
+        If matchSearchQuery = "Nothing" Then
+            e.Cancel = True
+        End If
+        '//////////////////////////////////////////////
+        'Set the player steamID to perform the search//
+        '//////////////////////////////////////////////
         For i As Integer = 0 To dataList.Count - 1
+            'Get the player steamID
             If dataList(i).Equals("!-- profile area --") Then
                 playerSteamID = dataList(i + 4).Remove((dataList(i + 4).Length - 2), 2)
                 playerSteamID = playerSteamID.Remove(0, 38)
                 If playerSteamID.IndexOf("/") > -1 Then
                     playerSteamID = playerSteamID.Remove(0, 6)
                 End If
+                'If the player steamID contains matchSearchQuery replace it
+                If playerSteamID.Contains(matchSearchQuery) Then
+                    playerSteamID = playerSteamID.Replace(matchSearchQuery, "-")
+                End If
             End If
+            'Clear the lines of all players steamIG
             If dataList(i).Contains("a class=""linkTitle"" href=""") Then
                 steamID = dataList(i).Remove(0, 56)
                 If steamID.IndexOf("/") > -1 Then
                     steamID = steamID.Remove(0, 6)
                 End If
                 steamID = steamID.Remove(steamID.IndexOf(""""), (steamID.Length - steamID.IndexOf("""")))
-                'Add identifier to avoid errors by the same steam id and profileName
-                dataList(i) = steamID & "steamID"
+                'If there are any player steamID that contains matchSearchQuery replace it
+                If steamID.Contains(matchSearchQuery) Then
+                    steamID = steamID.Replace(matchSearchQuery, "-")
+                End If
+                'Add identifier to avoid errors by the same steam id and profileName and delete player names
+                dataList(i) = steamID
+                dataList(i + 1) = "PlayerProfileName"
             End If
         Next
-        searchLang()
-        If matchSearchQuery = "Nothing" Then
-            e.Cancel = True
-        End If
         steamID = ""
+        '////////////////////////
+        'Remove inncessary data//
+        '////////////////////////
+        For i As Integer = 850 To dataList.Count - 1
+            If dataList(i).Contains(matchSearchQuery) Then
+                dataList.RemoveRange(0, (i - 1))
+                Exit For
+            End If
+        Next
         Return e
     End Function
     Private Function searchLang()
@@ -148,15 +155,6 @@ Public Class dataReader
                 matchSearchQuery = "Nothing"
             End If
         Next
-        '////////////////////////
-        'Remove inncessary data//
-        '////////////////////////
-        For i As Integer = 850 To dataList.Count - 1
-            If dataList(i).Contains(matchSearchQuery) Then
-                dataList.RemoveRange(0, (i - 1))
-                Exit For
-            End If
-        Next
         Return matchSearchQuery
     End Function
     Public Sub matchData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
@@ -204,7 +202,7 @@ Public Class dataReader
                 roundsTeamA = Convert.ToInt32(roundsCurrentMatch(0))
                 roundsTeamB = Convert.ToInt32(roundsCurrentMatch(1))
                 For k As Integer = i - 195 To i
-                    If dataList(k).Equals(playerSteamID & "steamID") Then
+                    If dataList(k).Equals(playerSteamID) Then
                         If roundsTeamA > roundsTeamB Then
                             'win
                             winCount += 1
@@ -241,7 +239,7 @@ Public Class dataReader
                     End If
                 Next
                 For k As Integer = i To i + 205
-                    If dataList(k).Equals(playerSteamID & "steamID") Then
+                    If dataList(k).Equals(playerSteamID) Then
                         If roundsTeamA > roundsTeamB Then
                             'lost
                             lostCount += 1
@@ -334,7 +332,7 @@ Public Class dataReader
     Public Sub getPlayerData(ByVal worker As System.ComponentModel.BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs)
         Dim number As Integer
         For i As Integer = 0 To dataList.Count - 1
-            If dataList(i).Equals(playerSteamID & "steamID") Then
+            If dataList(i).Equals(playerSteamID) Then
                 'All fields can be empty due some data corruption
                 If Int32.TryParse(dataList(i + 6), number) = True Then
                     ping.Add(dataList(i + 6))
@@ -373,7 +371,7 @@ Public Class dataReader
                     mvps.Add(0)
                 End If
                 'Get HS% 
-                If Int32.TryParse(dataList(i + 21), number) = True Then
+                If Int32.TryParse(dataList(i + 21).TrimEnd("%"), number) = True Then
                     hs.Add(Convert.ToInt32(dataList(i + 21).TrimEnd("%")))
                     avgHs += (dataList(i + 21).TrimEnd("%"))
                 Else
