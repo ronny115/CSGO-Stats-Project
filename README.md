@@ -1,4 +1,4 @@
-# CSGO-Stats-Project
+# CSGOStats-Project
 ## What is CSGOStats
 CSGO stats is a simple application to show you a complete game stats that allows you to track how do you perform in the game and maybe help you to improve.
 
